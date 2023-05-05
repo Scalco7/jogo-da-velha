@@ -1,0 +1,12 @@
+<section>
+  <div class="linhas" *ngFor="let l of tabuleiro">
+    <div
+      *ngFor="let c of l"
+      class="box-img"
+      [class]="c.pos"
+      (click)="foiClick(c.pos)"
+    >
+      <img [src]="c.valor" />
+    </div>
+  </div>
+</section>

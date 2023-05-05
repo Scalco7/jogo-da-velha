@@ -1,0 +1,93 @@
+:host{
+  width: 100%;
+  height: 100%;
+
+  section{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+  }
+
+  h1{
+    font-size: 60px;
+  }
+
+  #box-buttons{
+    position: relative;
+    width: 90%;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+  }
+
+  .cada-button{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    border: 2px solid var(--branco);
+  }
+
+  .control-div{
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cada-button img{
+    object-fit: contain;
+    width: 62.5%;
+    height: 62.5%;
+  }
+
+  @media(min-width: 1000px){
+    .control-div{
+      width: 100px;
+      height: 100px;
+    }
+
+    h1{
+      margin-bottom: 20px;
+      font-size: 60px;
+    }
+  }
+
+  @media(min-width: 1300px){
+    .control-div{
+      width: 150px;
+      height: 150px;
+    }
+
+    h1{
+      margin-bottom: 50px;
+      font-size: 80px;
+    }
+  }
+
+  @media(min-width: 2200px){
+    .control-div{
+      width: 300px;
+      height: 300px;
+      border: 2px solid var(--branco);
+    }
+
+    h1{
+      font-size: 6vw;
+    }
+  }
+}

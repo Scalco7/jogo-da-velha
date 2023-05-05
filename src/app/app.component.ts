@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ConteudoBotao } from './interfaces/ConteudoBotao';
 
 @Component({
   selector: 'app-root',

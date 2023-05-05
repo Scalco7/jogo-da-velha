@@ -1,0 +1,12 @@
+<section>
+  <a [href]="pathClick">
+    <button [style]="colorButton">
+      <div *ngFor="let i of contButton">
+        <label *ngIf="i.type == 'txt'; else isImg">{{ i.cont }}</label>
+        <ng-template #isImg>
+          <img [src]="i.cont" />
+        </ng-template>
+      </div>
+    </button>
+  </a>
+</section>
