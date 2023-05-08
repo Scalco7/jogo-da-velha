@@ -10,6 +10,7 @@
       <tabuleiro-game
         (trocaVez)="trocaVez($event)"
         (deuVelha)="deuVelha()"
+        [isBotPlaying]="!isTwoPlayers"
         [caracterPlayer1]="player1.caracter"
         [caracterPlayer2]="player2.caracter"
       ></tabuleiro-game>
@@ -20,16 +21,14 @@
     </div>
 
     <div id="box-geral-luz">
+      <div class="luz-magica" id="luz-magica-1" [style]="hideLuzMagica1">
+        <img [src]="fundoPlayer1" />
+      </div>
 
-    <div class="luz-magica" id="luz-magica-1" [style]="hideLuzMagica1">
-      <img [src]="fundoPlayer1" />
+      <div class="luz-magica" id="luz-magica-2" [style]="hideLuzMagica2">
+        <img [src]="fundoPlayer2" />
+      </div>
     </div>
-
-    <div class="luz-magica" id="luz-magica-2" [style]="hideLuzMagica2">
-      <img [src]="fundoPlayer2" />
-    </div>
-
-  </div>
   </div>
 
   <ng-template #endGame id="game-over">
