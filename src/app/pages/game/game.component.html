@@ -13,6 +13,7 @@
         [isBotPlaying]="!isTwoPlayers"
         [caracterPlayer1]="player1.caracter"
         [caracterPlayer2]="player2.caracter"
+        [isPlayerOne]="playerOneStart"
       ></tabuleiro-game>
     </div>
 
@@ -32,6 +33,10 @@
   </div>
 
   <ng-template #endGame id="game-over">
-    <app-game-over [playerWin]="whoWin" [deuVelha]="isVelha"></app-game-over>
+    <app-game-over
+      [playerWin]="whoWin"
+      [deuVelha]="isVelha"
+      [pathClick]="pathDeuVelha"
+    ></app-game-over>
   </ng-template>
 </section>

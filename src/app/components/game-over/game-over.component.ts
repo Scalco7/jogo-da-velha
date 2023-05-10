@@ -6,7 +6,7 @@ import { ConteudoBotao } from 'src/app/interfaces/ConteudoBotao';
   templateUrl: './game-over.component.html',
   styleUrls: ['./game-over.component.scss']
 })
-export class GameOverComponent{
+export class GameOverComponent {
   public contButton: ConteudoBotao[] = [{
     type: "txt",
     cont: "Jogar de Novo",
@@ -14,4 +14,5 @@ export class GameOverComponent{
 
   @Input() playerWin: string = ""
   @Input() deuVelha: any
+  @Input() pathClick: string = "game/1000"
 }

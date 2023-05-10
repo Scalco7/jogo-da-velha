@@ -28,18 +28,19 @@ export class TabuleiroGameComponent implements OnInit {
   @Input() caracterPlayer1: string = "assets/caracters-jogo/x-player-1";
   @Input() caracterPlayer2: string = "assets/caracters-jogo/x-player-2";
   @Input() isBotPlaying: boolean = false;
+  @Input() isPlayerOne: boolean = false;
 
   @Output() trocaVez = new EventEmitter<boolean[]>()
   @Output() deuVelha = new EventEmitter()
 
-  public isPlayerOne: boolean = true
+  public win: boolean = false
 
   public contTimes: number = 0;
   public myMove: number = 0;
   public theirMove: number = 0;
 
   ngOnInit(): void {
-    if (!this.isPlayerOne) {
+    if (!this.isPlayerOne && this.isBotPlaying) {
       this.foiClick("l1 c2")
     }
   }
@@ -49,13 +50,14 @@ export class TabuleiroGameComponent implements OnInit {
     let x = Number(pos.slice(-1)) - 1
 
     if (this.tabuleiro[y][x].valor === "assets/nda.svg") {
-      if (this.isPlayerOne) {
+
+      if (this.isPlayerOne || !this.isBotPlaying) {
         this.tabuleiro[y][x].valor = this.isPlayerOne ? this.caracterPlayer1 : this.caracterPlayer2
         this.verForGame()
         this.contTimes++
       }
 
-      if (this.isBotPlaying) {
+      if (this.isBotPlaying && !this.win) {
         this.botTime()
         this.verForGame()
         this.contTimes++
@@ -64,16 +66,15 @@ export class TabuleiroGameComponent implements OnInit {
   }
 
   public verForGame() {
-    let win: boolean = false
     let isVelha: boolean = false
-    win = this.verSeGanhou()
+    this.win = this.verSeGanhou()
     isVelha = this.verVelha()
 
-    if (!win && isVelha) {
+    if (!this.win && isVelha) {
       this.deuVelha.emit()
     }
     else {
-      this.trocaVez.emit([this.isPlayerOne, win])
+      this.trocaVez.emit([this.isPlayerOne, this.win])
       this.isPlayerOne = !this.isPlayerOne
     }
   }
@@ -113,6 +114,8 @@ export class TabuleiroGameComponent implements OnInit {
     }
     return true
   }
+
+  // ============================ BOT ===================================================== //
 
   public verIfWillWin(isTheBot: boolean): number[] {
     let caracterWillWin: string = isTheBot ? this.caracterPlayer2 : this.caracterPlayer1
