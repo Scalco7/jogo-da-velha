@@ -294,27 +294,36 @@ export class TabuleiroGameComponent implements OnInit {
       }
 
       else {
-        let c = this.verIfWillWin(true)[0] != 9 ? this.verIfWillWin(true) : this.verIfWillWin(false)
-        if (c[0] != 9) {
-          tabuleiroNow[c[0]][c[1]].valor = this.caracterPlayer2
-        }
-        else {
-          let lug = this.verEmptyPlace()
-          if (lug[0] != 9) {
-            tabuleiroNow[lug[0]][lug[1]].valor = this.caracterPlayer2
-          }
-        }
+        tabuleiroNow = this.automaticBot(tabuleiroNow)
       }
     }
     else {
       if (Math.floor(this.contTimes / 2) == 0) {
-        if (tabuleiroNow[1][1].valor == "assets/nda.svg") {
+        if (tabuleiroNow[0][1].valor == this.caracterPlayer1 || tabuleiroNow[1][2].valor == this.caracterPlayer1 || tabuleiroNow[1][0].valor == this.caracterPlayer1 || tabuleiroNow[2][1].valor == this.caracterPlayer1) {
+          for (let i = 0; i < 4; i++) {
+            let i1 = i < 2 ? i : i - 1
+            let i2 = i < 2 ? i1 + 1 : i1 - 1
+            if (tabuleiroNow[i1][i2].valor == this.caracterPlayer1) {
+              if (i1 + 1 == 2) {
+                tabuleiroNow[i1 + 1][i2].valor = this.caracterPlayer2
+              }
+              else {
+                tabuleiroNow[i1][i2 + 1].valor = this.caracterPlayer2
+              }
+
+              this.myMove = i + 1
+
+              break
+            }
+          }
+        }
+        else if (tabuleiroNow[1][1].valor == "assets/nda.svg") {
           tabuleiroNow[1][1].valor = this.caracterPlayer2
-          this.myMove = 1
+          this.myMove = 5
         }
         else {
           tabuleiroNow[0][0].valor = this.caracterPlayer2
-          this.myMove = 2
+          this.myMove = 9
         }
 
       }
@@ -322,11 +331,88 @@ export class TabuleiroGameComponent implements OnInit {
         let c = this.verIfWillWin(false)
         if (c[0] != 9) {
           tabuleiroNow[c[0]][c[1]].valor = this.caracterPlayer2
+          this.myMove = 9
+        }
+        else if (this.myMove == 1 || this.myMove == 4) {
+          if (tabuleiroNow[1][2].valor == this.caracterPlayer1) {
+            tabuleiroNow[1][1].valor = this.caracterPlayer2
+          }
+          else {
+            let l = this.myMove == 1 ? 2 : 0;
+            tabuleiroNow[l][2].valor == "assets/nda.svg" ? tabuleiroNow[l][2].valor = this.caracterPlayer2 : tabuleiroNow[1][1].valor = this.caracterPlayer2
+          }
+          this.myMove = 11
+        }
+        else if (this.myMove == 2 || this.myMove == 3) {
+          if (tabuleiroNow[2][1].valor == this.caracterPlayer1) {
+            tabuleiroNow[1][1].valor = this.caracterPlayer2
+          }
+          else {
+            let c = this.myMove == 2 ? 0 : 2;
+            tabuleiroNow[2][c].valor == "assets/nda.svg" ? tabuleiroNow[2][c].valor = this.caracterPlayer2 : tabuleiroNow[1][1].valor = this.caracterPlayer2
+          }
+          this.myMove = 11
         }
         else {
-          //###minha jogada se ele não for vencer
+          let isMIddle: boolean = false
+          for (let i = 0; i < 4; i++) {
+            let i1 = i < 2 ? i : i - 1
+            let i2 = i < 2 ? i1 + 1 : i1 - 1
+
+            if (tabuleiroNow[i1][i2].valor == this.caracterPlayer1) {
+              i1 == 1 ? tabuleiroNow[2][1].valor = this.caracterPlayer2 : tabuleiroNow[1][2].valor = this.caracterPlayer2
+              isMIddle = true
+              break
+            }
+          }
+
+          if (!isMIddle) {
+            tabuleiroNow[0][1].valor = this.caracterPlayer2
+          }
+
+          this.myMove = isMIddle ? 12 : 9
         }
       }
+      else if (Math.floor(this.contTimes / 2) == 2 && this.myMove != 9) {
+        let c = this.verIfWillWin(true)[0] != 9 ? this.verIfWillWin(true) : this.verIfWillWin(false)
+        if (c[0] != 9) {
+          tabuleiroNow[c[0]][c[1]].valor = this.caracterPlayer2
+        }
+        else if (this.myMove == 11) {
+          tabuleiroNow[1][1].valor = this.caracterPlayer2
+        }
+        else {
+          if (tabuleiroNow[0][1].valor == this.caracterPlayer1 && tabuleiroNow[0][0].valor == "assets/nda.svg") {
+            tabuleiroNow[0][0].valor = this.caracterPlayer2
+          }
+          else if (tabuleiroNow[2][1].valor == this.caracterPlayer1 && tabuleiroNow[2][0].valor == "assets/nda.svg") {
+            tabuleiroNow[2][0].valor = this.caracterPlayer2
+          }
+          else {
+            tabuleiroNow = this.automaticBot(tabuleiroNow)
+          }
+        }
+
+      }
+      else {
+        tabuleiroNow = this.automaticBot(tabuleiroNow)
+      }
     }
+  }
+
+  public automaticBot(tabuleiroNow: Tabuleiro[][]): Tabuleiro[][] {
+    let c = this.verIfWillWin(true)[0] != 9 ? this.verIfWillWin(true) : this.verIfWillWin(false)
+
+    if (c[0] != 9) {
+      tabuleiroNow[c[0]][c[1]].valor = this.caracterPlayer2
+    }
+    else {
+      let lug = this.verEmptyPlace()
+      if (lug[0] != 9) {
+        tabuleiroNow[lug[0]][lug[1]].valor = this.caracterPlayer2
+      }
+    }
+
+    return tabuleiroNow
   }
 }
