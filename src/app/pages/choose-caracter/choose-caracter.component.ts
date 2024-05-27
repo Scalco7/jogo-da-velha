@@ -36,13 +36,12 @@ export class ChooseCaracterComponent implements OnInit {
   }
 
   verCaracterEscolhido1(car: string) {
-    if (car == "x") {
-      car = "1"
-    } else if (car == "b") {
-      car = "2"
-    } else {
-      car = "3"
-    }
+    const carMap: { [key: string]: string } = {
+      "x": "1",
+      "b": "2",
+      "q": "3",
+    };
+    car = carMap[car];
 
     this.pathToGame = this.pathToGame.slice(0, -3) + car + this.pathToGame.slice(-2,)
 
@@ -52,18 +51,20 @@ export class ChooseCaracterComponent implements OnInit {
   }
 
   verCaracterEscolhido2(car: string) {
-    if (car == "x") {
-      car = "1"
-    } else if (car == "b") {
-      car = "2"
-    } else {
-      car = "3"
-    }
+    const carMap: { [key: string]: string } = {
+      "x": "1",
+      "b": "2",
+      "q": "3",
+    };
+    car = carMap[car];
 
-    this.pathToGame = this.pathToGame.slice(0, -2) + car + this.pathToGame.slice(-1)
+    const pathPrefix = this.pathToGame.slice(0, -2);
+    const pathSuffix = this.pathToGame.slice(-1);
+    this.pathToGame = `${pathPrefix}${car}${pathSuffix}`;
 
-    if (this.pathToGame.slice(-3, -2) !== "0") {
-      this.bloqueadorButtonHidden = "display: none;"
+    const penultimateChar = this.pathToGame.slice(-3, -2);
+    if (penultimateChar !== "0") {
+      this.bloqueadorButtonHidden = "display: none;";
     }
   }
 
